@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/signup.css"/>
+</head>
+<body>
+    <main>
+        <h1>signup</h1>
+        <p id="error"></p>
+        <form>
+            <input id="name" type="text" name="name" placeholder="Your name"/><br>
+            <input id="username" type="text" name="username" placeholder="Your username"/><br>
+            <input id="password" type="text" name="password" placeholder="Your password"/><br>
+            <button id="btn">signup</button>
+        </form>
+        <p>Already a user <a href="/">login</a></p>
+    </main>
+    <script>
+        const name = document.getElementById('name')
+        const username = document.getElementById('username')
+        const password = document.getElementById('password')
+        const button = document.getElementById('btn')
+        const error = document.getElementById('error')
+
+        button.addEventListener('click', (e)=>{
+            e.preventDefault()
+
+            let obj = {
+                name: name.value,
+                username: username.value,
+                password: password.value,
+            }
+
+            fetch('/signup', {
+                method: "POST",
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(obj)
+            })
+            .then(res => res.json())
+            .then(data => error.innerText = data.message)
+
+        })
+    </script>
+</body>
+</html>
